@@ -37,3 +37,12 @@
   notify:
     - restart jicofo
     - restart prosody
+
+- name: Trust Prosody SSL cert
+  copy:
+    src: /var/lib/prosody/{{ jitsi_meet_server_name }}.crt
+    dest: /usr/local/share/ca-certificates/{{ jitsi_meet_server_name }}.crt
+    remote_src: true
+  notify:
+    - update ca certs
+    - restart jicofo
