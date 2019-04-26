@@ -31,3 +31,14 @@
     content: "org.jitsi.impl.neomedia.transform.srtp.SRTPCryptoContext.checkReplay=false"
     owner: jvb
   notify: restart jitsi-videobridge
+
+- name: Set/unset NAT settings
+  lineinfile:
+    path: /etc/jitsi/videobridge/sip-communicator.properties
+    regexp: "^{{ item.key }}.*"
+    line: "{{ item.key }}={{ item.ip }}"
+    state: "{{ (item.ip is defined and item.ip|length) | ternary('present', 'absent') }}"
+  with_items:
+    - {'key': "org.ice4j.ice.harvest.NAT_HARVESTER_LOCAL_ADDRESS", 'ip': "{{ jitsi_meet_videobridge_nat.local_ip }}" }
+    - {'key': "org.ice4j.ice.harvest.NAT_HARVESTER_PUBLIC_ADDRESS", 'ip': "{{ jitsi_meet_videobridge_nat.public_ip }}" }
+  notify: restart jitsi-videobridge

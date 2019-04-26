@@ -54,6 +54,11 @@ jitsi_meet_jicofo_port: 5347
 # https://github.com/jitsi/jitsi-meet/blob/master/doc/manual-install.md
 jitsi_meet_videobridge_port: 5347
 
+# If Jitsi Videobridge is behind a NAT, set these values to make ICE work
+jitsi_meet_videobridge_nat:
+  local_ip: ''
+  public_ip: ''
+
 # A recent privacy-friendly addition, see here for details:
 # https://github.com/jitsi/jitsi-meet/issues/422
 # https://github.com/jitsi/jitsi-meet/pull/427
