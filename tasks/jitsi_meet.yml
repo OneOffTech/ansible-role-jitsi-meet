@@ -42,3 +42,10 @@
     - {'key': "org.ice4j.ice.harvest.NAT_HARVESTER_LOCAL_ADDRESS", 'ip': "{{ jitsi_meet_videobridge_nat.local_ip }}" }
     - {'key': "org.ice4j.ice.harvest.NAT_HARVESTER_PUBLIC_ADDRESS", 'ip': "{{ jitsi_meet_videobridge_nat.public_ip }}" }
   notify: restart jitsi-videobridge
+
+- name: Fix authorized source regexp
+  lineinfile:
+    path: /etc/jitsi/videobridge/sip-communicator.properties
+    regexp: "^org.jitsi.videobridge.AUTHORIZED_SOURCE_REGEXP=.*"
+    line: "org.jitsi.videobridge.AUTHORIZED_SOURCE_REGEXP=focus@auth.{{ jitsi_meet_server_name }}/.*"
+  notify: restart jitsi-videobridge
